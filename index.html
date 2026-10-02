@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin — SERVIX</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+/* ========== RESET ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --blue-600: #1D4ED8;
+  --blue-700: #1D3F9E;
+  --blue-500: #2E6BF0;
+  --blue-50: #EEF3FF;
+  --blue-100: #DCE7FF;
+  --green-500: #22C55E;
+  --green-600: #16A34A;
+  --green-700: #15803D;
+  --green-100: #DCFCE7;
+  --green-50: #F0FDF4;
+  --red-500: #EF4444;
+  --red-600: #DC2626;
+  --red-700: #B91C1C;
+  --red-100: #FEE2E2;
+  --red-50: #FEF2F2;
+  --yellow-500: #FACC15;
+  --yellow-100: #FEF9C3;
+  --yellow-700: #CA8A04;
+  --purple-500: #8B5CF6;
+  --purple-600: #7C3AED;
+  --purple-100: #EDE9FE;
+  --ink-900: #0B1220;
+  --ink-800: #1E293B;
+  --ink-700: #334155;
+  --ink-500: #64748B;
+  --ink-400: #94A3B8;
+  --ink-300: #CBD5E1;
+  --ink-200: #E2E8F0;
+  --ink-100: #F1F5F9;
+  --ink-50: #F8FAFC;
+  --bg: #F7F9FC;
+  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --t: .28s cubic-bezier(.2, .7, .3, 1);
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink-900);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: 0; background: none; font: inherit; }
+input, select, textarea { font: inherit; }
+
+/* ========== LOGIN ========== */
+.login-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    radial-gradient(800px 400px at 80% 0%, rgba(29, 78, 216, .10), transparent 60%),
+    radial-gradient(600px 400px at 10% 100%, rgba(34, 197, 94, .08), transparent 60%),
+    linear-gradient(180deg, #fff, var(--bg));
+}
+
+.login-box {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border: 1.5px solid var(--ink-200);
+  border-radius: 22px;
+  padding: 40px 34px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .12);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.login-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue-500), var(--green-500), var(--yellow-500), var(--red-500));
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.login-logo img {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  object-fit: contain;
+}
+
+.login-box h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.login-box .sub {
+  color: var(--ink-500);
+  font-size: .9rem;
+  margin-bottom: 26px;
+}
+
+.login-box .note {
+  margin-top: 22px;
+  font-size: .78rem;
+  color: var(--ink-500);
+  font-style: italic;
+  line-height: 1.5;
+  padding: 12px;
+  background: var(--blue-50);
+  border-radius: 10px;
+}
+
+/* ========== FIELDS ========== */
+.field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.field label {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--ink-800);
+}
+
+.field input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--ink-200);
+  border-radius: 12px;
+  font-size: .94rem;
+  background: #fff;
+  transition: all var(--t);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 4px var(--blue-50);
+}
+
+/* ========== BOTÕES ========== */
+.btn {
+  width: 100%;
+  padding: 15px 24px;
+  border-radius: 999px;
+  font-size: .98rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+  color: #fff;
+  transition: all var(--t);
+  box-shadow: 0 18px 40px rgba(29, 78, 216, .28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn:hover:not(:disabled) { transform: translateY(-2px); }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.btn .spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, .4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+.btn.loading .btn-text { display: none; }
+.btn.loading .spinner { display: block; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== ALERTAS ========== */
+.alerta {
+  padding: 13px 16px;
+  border-radius: 12px;
+  font-size: .88rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.alerta-sucesso {
+  background: var(--green-50);
+  color: var(--green-700);
+  border-left: 4px solid var(--green-500);
+}
+
+.alerta-erro {
+  background: var(--red-50);
+  color: var(--red-700);
+  border-left: 4px solid var(--red-500);
+}
+
+/* ========== PAINEL ========== */
+.painel-page {
+  display: none;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.painel-page.ativo { display: block; }
+
+.painel-header {
+  background: #fff;
+  border-bottom: 1px solid var(--ink-200);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.painel-header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -.03em;
+}
+
+.brand img {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.tag-admin {
+  font-size: .72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+  color: #fff;
+  border-radius: 999px;
+  letter-spacing: .08em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-name {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+.btn-sair {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--red-50);
+  color: var(--red-600);
+  font-weight: 700;
+  font-size: .85rem;
+  transition: all var(--t);
+}
+
+.btn-sair:hover {
+  background: var(--red-500);
+  color: #fff;
+}
+
+.painel-main {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+.page-title {
+  margin-bottom: 26px;
+}
+
+.page-title h1 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.page-title p {
+  color: var(--ink-500);
+  font-size: .95rem;
+}
+
+/* ========== STATS ========== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat {
+  background: #fff;
+  border: 1.5px solid var(--ink-200);
+  border-radius: 16px;
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .04);
+}
+
+.stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--c, var(--blue-500));
+}
+
+.stat:nth-child(1) { --c: var(--blue-500); }
+.stat:nth-child(2) { --c: var(--yellow-500); }
+.stat:nth-child(3) { --c: var(--green-500); }
+.stat:nth-child(4) { --c: var(--purple-500); }
+
+.stat-num {
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink-900);
+  margin-bottom: 6px;
+}
+
+.stat-lbl {
+  font-size: .85rem;
+  color: var(--ink-500);
+  font-weight: 600;
+}
+
+/* ========== TABS ========== */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1.5px solid var(--ink-200);
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--ink-700);
+  transition: all var(--t);
+}
+
+.tab:hover {
+  border-color: var(--blue-500);
+  color: var(--blue-700);
+}
+
+.tab.is-active {
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 12px 26px rgba(29, 78, 216, .25);
+}
+
+.tab-content { display: block; }
+.tab-content.hidden { display: none; }
+
+/* ========== TABELA ========== */
+.tabela-wrap {
+  background: #fff;
+  border: 1.5px solid var(--ink-200);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .04);
+}
+
+.tabela-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--ink-100);
+  flex-wrap: wrap;
+}
+
+.tabela-top h3 {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.tabela-top input {
+  padding: 9px 14px;
+  border: 1.5px solid var(--ink-200);
+  border-radius: 10px;
+  font-size: .86rem;
+  min-width: 220px;
+}
+
+.tabela-top input:focus {
+  outline: none;
+  border-color: var(--blue-500);
+}
+
+.tabela-scroll { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+  min-width: 700px;
+}
+
+table thead { background: var(--ink-50); }
+
+table th {
+  padding: 12px 18px;
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 800;
+  color: var(--ink-500);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+table td {
+  padding: 14px 18px;
+  border-top: 1px solid var(--ink-100);
+  color: var(--ink-800);
+}
+
+table tbody tr:hover { background: var(--blue-50); }
+
+.usuario-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-500), var(--purple-500));
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: .8rem;
+  flex-shrink: 0;
+}
+
+.usuario-cell .nome {
+  font-weight: 600;
+  color: var(--ink-900);
+  font-size: .9rem;
+}
+
+.usuario-cell .email {
+  font-size: .76rem;
+  color: var(--ink-500);
+}
+
+.badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.badge-pendente { background: var(--yellow-100); color: var(--yellow-700); }
+.badge-ativo { background: var(--green-100); color: var(--green-700); }
+.badge-suspenso { background: var(--red-100); color: var(--red-700); }
+.badge-inativo { background: var(--ink-100); color: var(--ink-500); }
+.badge-bloqueado { background: var(--red-100); color: var(--red-700); }
+
+.acoes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: .78rem;
+  font-weight: 700;
+  transition: all var(--t);
+}
+
+.btn-outline {
+  background: var(--blue-50);
+  color: var(--blue-700);
+}
+
+.btn-outline:hover {
+  background: var(--blue-600);
+  color: #fff;
+}
+
+.btn-danger {
+  background: var(--red-50);
+  color: var(--red-700);
+}
+
+.btn-danger:hover {
+  background: var(--red-500);
+  color: #fff;
+}
+
+.empty {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--ink-500);
+}
+
+.empty .ico {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  opacity: .4;
+}
+
+@media (max-width: 600px) {
+  .login-box { padding: 30px 22px; }
+  .painel-main { padding: 20px 16px 40px; }
+  .painel-header-inner { padding: 12px 16px; }
+  .user-name { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TELA DE LOGIN ============ -->
+<div class="login-wrap" id="tela-login">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" alt="SERVIX" />
+    </div>
+    <h1>Painel Admin</h1>
+    <p class="sub">Acesso restrito a administradores SERVIX</p>
+
+    <div id="alerta-login" class="alerta" style="display: none;"></div>
+
+    <form id="form-login">
+      <div class="field">
+        <label>E-mail</label>
+        <input type="email" name="email" required autocomplete="email" placeholder="seu@email.com" />
+      </div>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" name="senha" required autocomplete="current-password" placeholder="Sua senha" />
+      </div>
+      <button type="submit" class="btn" id="btn-login">
+        <span class="btn-text">Entrar no painel</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <p class="note">
+      📌 <strong>Não tem conta?</strong> O cadastro de administradores é feito exclusivamente pelo <strong>Admin PRO</strong>.
+    </p>
+  </div>
+</div>
+
+<!-- ============ PAINEL (aparece depois do login) ============ -->
+<div class="painel-page" id="tela-painel">
+
+  <header class="painel-header">
+    <div class="painel-header-inner">
+      <div class="brand">
+        <img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" alt="SERVIX" />
+        <span>SERVIX</span>
+        <span class="tag-admin">ADMIN</span>
+      </div>
+      <div class="header-right">
+        <span id="nome-usuario" class="user-name"></span>
+        <button class="btn-sair" id="btn-sair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="painel-main">
+
+    <div id="alerta-painel" class="alerta" style="display:none;"></div>
+
+    <div class="page-title">
+      <h1>Painel Administrativo</h1>
+      <p>Gerencie profissionais e clientes cadastrados na plataforma</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" id="stat-prof">—</div>
+        <div class="stat-lbl">Profissionais</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-prof-pend">—</div>
+        <div class="stat-lbl">Pendentes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-clientes">—</div>
+        <div class="stat-lbl">Clientes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-clientes-ativos">—</div>
+        <div class="stat-lbl">Clientes ativos</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab is-active" data-tab="prof">👷 Profissionais</button>
+      <button class="tab" data-tab="cli">👥 Clientes</button>
+    </div>
+
+    <!-- Tab Profissionais -->
+    <section id="tab-prof" class="tab-content">
+      <div class="tabela-wrap">
+        <div class="tabela-top">
+          <h3>Profissionais</h3>
+          <input type="text" id="filtro-prof" placeholder="🔍 Buscar..." />
+        </div>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cidade</th>
+                <th>Categorias</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="lista-prof"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab Clientes -->
+    <section id="tab-cli" class="tab-content hidden">
+      <div class="tabela-wrap">
+        <div class="tabela-top">
+          <h3>Clientes</h3>
+          <input type="text" id="filtro-cli" placeholder="🔍 Buscar..." />
+        </div>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cidade</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="lista-cli"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ========== CONFIGURAÇÃO ========== */
+const API_URL = 'https://servix-api-1.onrender.com';
+
+const ENDPOINTS = {
+  login: '/api/admin/login',
+  me: '/api/admin/me',
+  dashboard: '/api/admin/dashboard',
+  profissionais: '/api/admin/profissionais',
+  clientes: '/api/admin/clientes',
+};
+
+/* ========== ESTADO ========== */
+let usuariosProfissionais = [];
+let usuariosClientes = [];
+
+/* ========== ELEMENTOS ========== */
+const telaLogin = document.getElementById('tela-login');
+const telaPainel = document.getElementById('tela-painel');
+const formLogin = document.getElementById('form-login');
+const btnLogin = document.getElementById('btn-login');
+const alertaLogin = document.getElementById('alerta-login');
+const alertaPainel = document.getElementById('alerta-painel');
+
+/* ========== HELPERS DE AUTH ========== */
+function pegarToken() { return localStorage.getItem('servix_token'); }
+function pegarTipo() { return localStorage.getItem('servix_tipo'); }
+function pegarUsuario() {
+  try {
+    const raw = localStorage.getItem('servix_usuario');
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+function salvarSessao(token, usuario) {
+  localStorage.setItem('servix_token', token);
+  localStorage.setItem('servix_usuario', JSON.stringify(usuario));
+  localStorage.setItem('servix_tipo', 'admin');
+}
+function logout() {
+  localStorage.removeItem('servix_token');
+  localStorage.removeItem('servix_usuario');
+  localStorage.removeItem('servix_tipo');
+}
+
+/* ========== API ========== */
+async function chamarAPI(endpoint, metodo = 'GET', dados = null) {
+  const opcoes = {
+    method: metodo,
+    headers: { 'Content-Type': 'application/json' },
+  };
+  const token = pegarToken();
+  if (token) opcoes.headers['Authorization'] = `Bearer ${token}`;
+  if (dados && ['POST', 'PUT', 'PATCH'].includes(metodo)) {
+    opcoes.body = JSON.stringify(dados);
+  }
+  const res = await fetch(`${API_URL}${endpoint}`, opcoes);
+  if (res.status === 204) return null;
+  const json = await res.json();
+  if (!res.ok) {
+    const erro = new Error(json.mensagem || `Erro ${res.status}`);
+    erro.status = res.status;
+    erro.dados = json;
+    throw erro;
+  }
+  return json;
+}
+
+/* ========== ALERTAS ========== */
+function mostrarAlerta(el, tipo, msg) {
+  el.className = `alerta alerta-${tipo}`;
+  el.textContent = msg;
+  el.style.display = 'flex';
+  setTimeout(() => {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 50);
+}
+function esconderAlerta(el) { el.style.display = 'none'; }
+
+/* ========== INIT ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Se já tiver token de admin, entra direto no painel
+  if (pegarToken() && pegarTipo() === 'admin') {
+    entrarNoPainel();
+  } else {
+    // Se tiver token de outro tipo, limpa pra evitar confusão
+    if (pegarTipo() !== 'admin') {
+      logout();
+    }
+  }
+
+  // Login
+  formLogin.addEventListener('submit', fazerLogin);
+
+  // Logout
+  document.getElementById('btn-sair').addEventListener('click', () => {
+    logout();
+    location.reload();
+  });
+
+  // Tabs do painel
+  document.querySelectorAll('.tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const alvo = tab.dataset.tab;
+      document.querySelectorAll('.tab').forEach((t) => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      document.querySelectorAll('.tab-content').forEach((c) => c.classList.add('hidden'));
+      document.getElementById(`tab-${alvo}`).classList.remove('hidden');
+    });
+  });
+
+  // Filtros
+  const filtroProf = document.getElementById('filtro-prof');
+  const filtroCli = document.getElementById('filtro-cli');
+  if (filtroProf) filtroProf.addEventListener('input', filtrarProfissionais);
+  if (filtroCli) filtroCli.addEventListener('input', filtrarClientes);
+});
+
+/* ========== LOGIN ========== */
+async function fazerLogin(e) {
+  e.preventDefault();
+  esconderAlerta(alertaLogin);
+
+  const email = formLogin.email.value.trim();
+  const senha = formLogin.senha.value;
+
+  if (!email || !senha) {
+    mostrarAlerta(alertaLogin, 'erro', 'Preencha e-mail e senha.');
+    return;
+  }
+
+  btnLogin.classList.add('loading');
+  btnLogin.disabled = true;
+
+  try {
+    const resposta = await fetch(`${API_URL}${ENDPOINTS.login}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    const json = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(json.mensagem || 'Credenciais inválidas');
+    }
+
+    salvarSessao(json.dados.token, json.dados.admin);
+    mostrarAlerta(alertaLogin, 'sucesso', '✅ Login realizado! Carregando painel...');
+
+    setTimeout(() => entrarNoPainel(), 700);
+  } catch (err) {
+    mostrarAlerta(alertaLogin, 'erro', err.message || 'Erro ao fazer login');
+  } finally {
+    btnLogin.classList.remove('loading');
+    btnLogin.disabled = false;
+  }
+}
+
+/* ========== ENTRAR NO PAINEL ========== */
+async function entrarNoPainel() {
+  telaLogin.style.display = 'none';
+  telaPainel.classList.add('ativo');
+
+  const usuario = pegarUsuario();
+  if (usuario) {
+    document.getElementById('nome-usuario').textContent = usuario.nome || usuario.email;
+  }
+
+  await carregarDashboard();
+  await carregarProfissionais();
+  await carregarClientes();
+}
+
+/* ========== DASHBOARD ========== */
+async function carregarDashboard() {
+  try {
+    const r = await chamarAPI(ENDPOINTS.dashboard);
+    const d = r.dados;
+    document.getElementById('stat-prof').textContent = d.profissionais ?? 0;
+    document.getElementById('stat-prof-pend').textContent = d.profissionaisPendentes ?? 0;
+    document.getElementById('stat-clientes').textContent = d.clientes ?? 0;
+    document.getElementById('stat-clientes-ativos').textContent = d.clientesAtivos ?? 0;
+  } catch (e) {
+    console.error('Dashboard:', e);
+  }
+}
+
+/* ========== PROFISSIONAIS ========== */
+async function carregarProfissionais() {
+  try {
+    const r = await chamarAPI(ENDPOINTS.profissionais);
+    usuariosProfissionais = r.dados || [];
+    renderizarProfissionais(usuariosProfissionais);
+  } catch (e) {
+    document.getElementById('lista-prof').innerHTML =
+      `<tr><td colspan="5" class="empty">Erro ao carregar: ${e.message}</td></tr>`;
+  }
+}
+
+function renderizarProfissionais(lista) {
+  const tbody = document.getElementById('lista-prof');
+  if (!lista || lista.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional cadastrado ainda.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = lista.map((p) => `
+    <tr>
+      <td>
+        <div class="usuario-cell">
+          <div class="avatar">${iniciais(p.nome)}</div>
+          <div>
+            <div class="nome">${p.nome || '—'}</div>
+            <div class="email">${p.email || '—'}</div>
+          </div>
+        </div>
+      </td>
+      <td>${p.cidade || '—'}/${p.estado || '—'}</td>
+      <td>${(p.categorias || []).slice(0, 2).join(', ')}${(p.categorias || []).length > 2 ? '...' : ''}</td>
+      <td><span class="badge badge-${p.status}">${p.status}</span></td>
+      <td>
+        <div class="acoes">
+          <button class="btn-sm btn-outline" onclick="mudarStatusProf('${p._id}', 'ativo')">Ativar</button>
+          <button class="btn-sm btn-danger" onclick="mudarStatusProf('${p._id}', 'suspenso')">Suspender</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filtrarProfissionais() {
+  const termo = document.getElementById('filtro-prof').value.toLowerCase();
+  const filtrados = usuariosProfissionais.filter((p) =>
+    (p.nome || '').toLowerCase().includes(termo) ||
+    (p.email || '').toLowerCase().includes(termo)
+  );
+  renderizarProfissionais(filtrados);
+}
+
+async function mudarStatusProf(id, status) {
+  try {
+    await chamarAPI(`${ENDPOINTS.profissionais}/${id}/status`, 'PATCH', { status });
+    await carregarProfissionais();
+    await carregarDashboard();
+    mostrarAlerta(alertaPainel, 'sucesso', 'Status atualizado!');
+  } catch (e) {
+    mostrarAlerta(alertaPainel, 'erro', e.message);
+  }
+}
+
+/* ========== CLIENTES ========== */
+async function carregarClientes() {
+  try {
+    const r = await chamarAPI(ENDPOINTS.clientes);
+    usuariosClientes = r.dados || [];
+    renderizarClientes(usuariosClientes);
+  } catch (e) {
+    document.getElementById('lista-cli').innerHTML =
+      `<tr><td colspan="5" class="empty">Erro ao carregar: ${e.message}</td></tr>`;
+  }
+}
+
+function renderizarClientes(lista) {
+  const tbody = document.getElementById('lista-cli');
+  if (!lista || lista.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente cadastrado ainda.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = lista.map((c) => `
+    <tr>
+      <td>
+        <div class="usuario-cell">
+          <div class="avatar">${iniciais(c.nome)}</div>
+          <div>
+            <div class="nome">${c.nome || '—'}</div>
+            <div class="email">${c.email || '—'}</div>
+          </div>
+        </div>
+      </td>
+      <td>${c.cidade || '—'}/${c.estado || '—'}</td>
+      <td>${c.tipo === 'empresa' ? '🏢 Empresa' : '👤 Pessoa Física'}</td>
+      <td><span class="badge badge-${c.status}">${c.status}</span></td>
+      <td>
+        <div class="acoes">
+          <button class="btn-sm btn-outline" onclick="mudarStatusCli('${c._id}', 'ativo')">Ativar</button>
+          <button class="btn-sm btn-danger" onclick="mudarStatusCli('${c._id}', 'bloqueado')">Bloquear</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filtrarClientes() {
+  const termo = document.getElementById('filtro-cli').value.toLowerCase();
+  const filtrados = usuariosClientes.filter((c) =>
+    (c.nome || '').toLowerCase().includes(termo) ||
+    (c.email || '').toLowerCase().includes(termo)
+  );
+  renderizarClientes(filtrados);
+}
+
+async function mudarStatusCli(id, status) {
+  try {
+    await chamarAPI(`${ENDPOINTS.clientes}/${id}/status`, 'PATCH', { status });
+    await carregarClientes();
+    await carregarDashboard();
+    mostrarAlerta(alertaPainel, 'sucesso', 'Status atualizado!');
+  } catch (e) {
+    mostrarAlerta(alertaPainel, 'erro', e.message);
+  }
+}
+
+/* ========== UTILITÁRIO ========== */
+function iniciais(nome) {
+  if (!nome) return '?';
+  return nome.split(' ').slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+}
+</script>
+</body>
+</html>
