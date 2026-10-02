@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Admin — SERVIX</title>
 <link rel="icon" type="image/png" href="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -18,66 +15,47 @@
   --yellow-500:#FACC15;--yellow-100:#FEF9C3;--yellow-700:#CA8A04;
   --purple-500:#8B5CF6;--purple-600:#7C3AED;--purple-100:#EDE9FE;
   --ink-900:#0B1220;--ink-800:#1E293B;--ink-700:#334155;--ink-500:#64748B;
-  --ink-400:#94A3B8;--ink-300:#CBD5E1;--ink-200:#E2E8F0;--ink-100:#F1F5F9;--ink-50:#F8FAFC;
+  --ink-400:#94A3B8;--ink-200:#E2E8F0;--ink-100:#F1F5F9;--ink-50:#F8FAFC;
   --bg:#F7F9FC;--font:'Plus Jakarta Sans',system-ui,sans-serif;
-  --t:.2s cubic-bezier(.2,.7,.3,1);
 }
 body{font-family:var(--font);background:var(--bg);color:var(--ink-900);line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 button{cursor:pointer;border:0;background:none;font:inherit}
-input,select,textarea{font:inherit}
+input{font:inherit}
 
-/* LOGIN/CADASTRO */
-.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(800px 400px at 80% 0%,rgba(29,78,216,.10),transparent 60%),radial-gradient(600px 400px at 10% 100%,rgba(34,197,94,.08),transparent 60%),linear-gradient(180deg,#fff,var(--bg))}
+.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(800px 400px at 80% 0%,rgba(29,78,216,.10),transparent 60%),linear-gradient(180deg,#fff,var(--bg))}
 .login-box{width:100%;max-width:440px;background:#fff;border:1.5px solid var(--ink-200);border-radius:22px;padding:40px 34px;box-shadow:0 24px 60px rgba(15,23,42,.12);position:relative;overflow:hidden;text-align:center}
 .login-box::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue-500),var(--green-500),var(--yellow-500),var(--red-500))}
 .login-logo{display:flex;justify-content:center;margin-bottom:16px}
-.login-logo img{width:64px;height:64px;border-radius:14px;object-fit:contain}
+.login-logo img{width:64px;height:64px;border-radius:14px}
 .login-box h1{font-size:1.5rem;font-weight:800;margin-bottom:6px}
-.login-box .sub{color:var(--ink-500);font-size:.9rem;margin-bottom:24px}
-
-.tabs-auth{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--ink-100);padding:5px;border-radius:999px;margin-bottom:22px}
-.tab-auth{padding:10px;border-radius:999px;font-weight:700;font-size:.88rem;color:var(--ink-500);transition:all var(--t)}
-.tab-auth:hover{color:var(--ink-800)}
-.tab-auth.is-active{background:#fff;color:var(--blue-700);box-shadow:0 4px 12px rgba(15,23,42,.06)}
-
+.login-box .sub{color:var(--ink-500);font-size:.9rem;margin-bottom:26px}
 .field{display:grid;gap:6px;margin-bottom:14px;text-align:left}
 .field label{font-size:.85rem;font-weight:700;color:var(--ink-800)}
-.field input{width:100%;padding:12px 14px;border:1.5px solid var(--ink-200);border-radius:12px;font-size:.94rem;background:#fff;transition:all var(--t)}
+.field input{width:100%;padding:13px 16px;border:1.5px solid var(--ink-200);border-radius:12px;font-size:.94rem;background:#fff}
 .field input:focus{outline:none;border-color:var(--blue-500);box-shadow:0 0 0 4px var(--blue-50)}
-.field input.err{border-color:var(--red-500);box-shadow:0 0 0 4px var(--red-50)}
-small.err{color:var(--red-600);font-size:.78rem;font-weight:600;display:none}
-.field.has-err small.err{display:block}
-
-.btn{width:100%;padding:15px 24px;border-radius:999px;font-size:.98rem;font-weight:700;background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;transition:all var(--t);box-shadow:0 18px 40px rgba(29,78,216,.28);display:flex;align-items:center;justify-content:center;gap:10px}
-.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 22px 46px rgba(29,78,216,.4)}
+.btn{width:100%;padding:15px 24px;border-radius:999px;font-size:.98rem;font-weight:700;background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 18px 40px rgba(29,78,216,.28)}
+.btn:hover:not(:disabled){transform:translateY(-2px)}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 .btn .spinner{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 .btn.loading .btn-text{display:none}
 .btn.loading .spinner{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .alerta{padding:13px 16px;border-radius:12px;font-size:.88rem;font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:10px;text-align:left}
 .alerta-sucesso{background:var(--green-50);color:var(--green-700);border-left:4px solid var(--green-500)}
 .alerta-erro{background:var(--red-50);color:var(--red-700);border-left:4px solid var(--red-500)}
 .alerta-info{background:var(--blue-50);color:var(--blue-700);border-left:4px solid var(--blue-500)}
 
-.cadastro-info{font-size:.82rem;color:var(--blue-700);background:var(--blue-50);padding:12px;border-radius:10px;margin-bottom:16px;text-align:left;line-height:1.5;font-weight:600}
-
-.login-footer{margin-top:20px;font-size:.82rem;color:var(--ink-500);text-align:center;line-height:1.5}
-
-/* PAINEL */
-.painel-page{display:none;min-height:100vh;background:var(--bg)}
-.painel-page.ativo{display:block}
+.painel{display:none;min-height:100vh;background:var(--bg)}
+.painel.ativo{display:block}
 .painel-header{background:#fff;border-bottom:1px solid var(--ink-200);position:sticky;top:0;z-index:10}
 .painel-header-inner{max-width:1300px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem;letter-spacing:-.03em}
-.brand img{width:38px;height:38px;border-radius:10px;object-fit:contain}
-.tag-admin{font-size:.72rem;font-weight:800;padding:4px 10px;background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;border-radius:999px;letter-spacing:.08em}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem}
+.brand img{width:38px;height:38px;border-radius:10px}
+.tag-admin{font-size:.72rem;font-weight:800;padding:4px 10px;background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;border-radius:999px}
 .header-right{display:flex;align-items:center;gap:14px}
 .user-name{font-size:.9rem;font-weight:600;color:var(--ink-700)}
-.btn-sair{padding:8px 16px;border-radius:999px;background:var(--red-50);color:var(--red-600);font-weight:700;font-size:.85rem;transition:all var(--t)}
+.btn-sair{padding:8px 16px;border-radius:999px;background:var(--red-50);color:var(--red-600);font-weight:700;font-size:.85rem}
 .btn-sair:hover{background:var(--red-500);color:#fff}
 
 .painel-main{max-width:1300px;margin:0 auto;padding:30px 24px 60px}
@@ -86,8 +64,8 @@ small.err{color:var(--red-600);font-size:.78rem;font-weight:600;display:none}
 .page-title p{color:var(--ink-500);font-size:.95rem}
 
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
-.stat{background:#fff;border:1.5px solid var(--ink-200);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(15,23,42,.04)}
-.stat::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--c,var(--blue-500))}
+.stat{background:#fff;border:1.5px solid var(--ink-200);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--c)}
 .stat:nth-child(1){--c:var(--blue-500)}
 .stat:nth-child(2){--c:var(--yellow-500)}
 .stat:nth-child(3){--c:var(--green-500)}
@@ -96,31 +74,30 @@ small.err{color:var(--red-600);font-size:.78rem;font-weight:600;display:none}
 .stat-lbl{font-size:.85rem;color:var(--ink-500);font-weight:600}
 
 .tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
-.tab{padding:11px 22px;border-radius:999px;background:#fff;border:1.5px solid var(--ink-200);font-weight:700;font-size:.9rem;color:var(--ink-700);transition:all var(--t)}
+.tab{padding:11px 22px;border-radius:999px;background:#fff;border:1.5px solid var(--ink-200);font-weight:700;font-size:.9rem;color:var(--ink-700)}
 .tab:hover{border-color:var(--blue-500);color:var(--blue-700)}
-.tab.is-active{background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;border-color:transparent;box-shadow:0 12px 26px rgba(29,78,216,.25)}
+.tab.is-active{background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;border-color:transparent}
 .tab-content{display:block}
 .tab-content.hidden{display:none}
 
-.tabela-wrap{background:#fff;border:1.5px solid var(--ink-200);border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(15,23,42,.04)}
+.tabela-wrap{background:#fff;border:1.5px solid var(--ink-200);border-radius:16px;overflow:hidden}
 .tabela-top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 22px;border-bottom:1px solid var(--ink-100);flex-wrap:wrap}
 .tabela-top h3{font-size:1rem;font-weight:800}
 .tabela-top input{padding:9px 14px;border:1.5px solid var(--ink-200);border-radius:10px;font-size:.86rem;min-width:220px}
-.tabela-top input:focus{outline:none;border-color:var(--blue-500)}
 .tabela-scroll{overflow-x:auto}
 
 table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:700px}
 table thead{background:var(--ink-50)}
-table th{padding:12px 18px;text-align:left;font-size:.75rem;font-weight:800;color:var(--ink-500);text-transform:uppercase;letter-spacing:.05em}
-table td{padding:14px 18px;border-top:1px solid var(--ink-100);color:var(--ink-800)}
+table th{padding:12px 18px;text-align:left;font-size:.75rem;font-weight:800;color:var(--ink-500);text-transform:uppercase}
+table td{padding:14px 18px;border-top:1px solid var(--ink-100)}
 table tbody tr:hover{background:var(--blue-50)}
 
 .usuario-cell{display:flex;align-items:center;gap:10px}
 .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue-500),var(--purple-500));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.8rem;flex-shrink:0}
-.usuario-cell .nome{font-weight:600;color:var(--ink-900);font-size:.9rem}
+.usuario-cell .nome{font-weight:600;font-size:.9rem}
 .usuario-cell .email{font-size:.76rem;color:var(--ink-500)}
 
-.badge{display:inline-flex;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.badge{display:inline-flex;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase}
 .badge-pendente{background:var(--yellow-100);color:var(--yellow-700)}
 .badge-ativo{background:var(--green-100);color:var(--green-700)}
 .badge-suspenso{background:var(--red-100);color:var(--red-700)}
@@ -128,7 +105,7 @@ table tbody tr:hover{background:var(--blue-50)}
 .badge-bloqueado{background:var(--red-100);color:var(--red-700)}
 
 .acoes{display:flex;gap:6px;flex-wrap:wrap}
-.btn-sm{padding:6px 12px;border-radius:8px;font-size:.78rem;font-weight:700;transition:all var(--t)}
+.btn-sm{padding:6px 12px;border-radius:8px;font-size:.78rem;font-weight:700}
 .btn-outline{background:var(--blue-50);color:var(--blue-700)}
 .btn-outline:hover{background:var(--blue-600);color:#fff}
 .btn-danger{background:var(--red-50);color:var(--red-700)}
@@ -136,119 +113,42 @@ table tbody tr:hover{background:var(--blue-50)}
 
 .empty{text-align:center;padding:50px 20px;color:var(--ink-500)}
 .empty .ico{font-size:2.5rem;margin-bottom:10px;opacity:.4}
-.empty .loading-ico{display:inline-block;width:24px;height:24px;border:3px solid var(--blue-50);border-top-color:var(--blue-600);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:10px}
-
-@media (max-width:600px){
-  .login-box{padding:30px 22px}
-  .painel-main{padding:20px 16px 40px}
-  .painel-header-inner{padding:12px 16px}
-  .user-name{display:none}
-}
+.empty .loading-ico{display:inline-block;width:24px;height:24px;border:3px solid var(--blue-50);border-top-color:var(--blue-600);border-radius:50%;animation:spin .8s linear infinite}
 </style>
 </head>
 <body>
 
-<!-- LOGIN / CADASTRO -->
 <div class="login-wrap" id="tela-login">
   <div class="login-box">
-    <div class="login-logo">
-      <img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" alt="SERVIX" />
-    </div>
+    <div class="login-logo"><img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" /></div>
     <h1>Painel Admin</h1>
     <p class="sub">Acesso restrito a administradores</p>
-
-    <div class="tabs-auth" id="tabs-auth" style="display:none;">
-      <button type="button" class="tab-auth is-active" data-modo="login">Entrar</button>
-      <button type="button" class="tab-auth" data-modo="cadastro">Cadastrar</button>
-    </div>
-
-    <div id="alerta-auth" class="alerta" style="display:none;"></div>
-
+    <div id="alerta-login" class="alerta" style="display:none;"></div>
     <form id="form-login">
-      <div class="field">
-        <label>E-mail</label>
-        <input type="email" name="email" required autocomplete="email" placeholder="seu@email.com" />
-      </div>
-      <div class="field">
-        <label>Senha</label>
-        <input type="password" name="senha" required autocomplete="current-password" placeholder="Sua senha" />
-      </div>
+      <div class="field"><label>E-mail</label><input type="email" name="email" required placeholder="seu@email.com" /></div>
+      <div class="field"><label>Senha</label><input type="password" name="senha" required placeholder="Sua senha" /></div>
       <button type="submit" class="btn" id="btn-login">
         <span class="btn-text">Entrar no painel</span>
         <span class="spinner"></span>
       </button>
     </form>
-
-    <form id="form-cadastro" style="display:none;">
-      <div class="cadastro-info" id="info-convite" style="display:none;">
-        🔒 Para se cadastrar, você precisa do <strong>código de convite</strong> fornecido pelo administrador PRO.
-      </div>
-
-      <div class="field">
-        <label>Nome completo *</label>
-        <input type="text" name="nome" autocomplete="name" placeholder="Seu nome" />
-        <small class="err"></small>
-      </div>
-      <div class="field">
-        <label>E-mail *</label>
-        <input type="email" name="email" autocomplete="email" placeholder="seu@email.com" />
-        <small class="err"></small>
-      </div>
-      <div class="field">
-        <label>Telefone</label>
-        <input type="tel" name="telefone" autocomplete="tel" placeholder="(00) 00000-0000" />
-      </div>
-      <div class="field">
-        <label>Senha (mínimo 8 caracteres) *</label>
-        <input type="password" name="senha" autocomplete="new-password" placeholder="Crie uma senha" />
-        <small class="err"></small>
-      </div>
-      <div class="field">
-        <label>Confirmar senha *</label>
-        <input type="password" name="senhaConfirm" autocomplete="new-password" placeholder="Repita a senha" />
-        <small class="err"></small>
-      </div>
-      <div class="field" id="campo-convite" style="display:none;">
-        <label>Código de convite *</label>
-        <input type="text" name="codigoConvite" placeholder="Digite o código" />
-        <small class="err"></small>
-      </div>
-
-      <button type="submit" class="btn" id="btn-cadastro" style="background:linear-gradient(135deg,var(--green-600),var(--green-700));box-shadow:0 18px 40px rgba(22,163,74,.28);">
-        <span class="btn-text">Criar minha conta</span>
-        <span class="spinner"></span>
-      </button>
-    </form>
-
-    <p class="login-footer" id="login-footer">
-      Não tem conta? O cadastro é controlado pelo administrador PRO.
-    </p>
+    <p style="margin-top:20px;font-size:.82rem;color:var(--ink-500);">Não tem conta? Fale com o administrador PRO.</p>
   </div>
 </div>
 
-<!-- PAINEL -->
-<div class="painel-page" id="tela-painel">
+<div class="painel" id="tela-painel">
   <header class="painel-header">
     <div class="painel-header-inner">
-      <div class="brand">
-        <img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" alt="SERVIX" />
-        <span>SERVIX</span>
-        <span class="tag-admin">ADMIN</span>
-      </div>
+      <div class="brand"><img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" /><span>SERVIX</span><span class="tag-admin">ADMIN</span></div>
       <div class="header-right">
         <span id="nome-usuario" class="user-name"></span>
         <button class="btn-sair" id="btn-sair">Sair</button>
       </div>
     </div>
   </header>
-
   <main class="painel-main">
     <div id="alerta-painel" class="alerta" style="display:none;"></div>
-
-    <div class="page-title">
-      <h1>Painel Administrativo</h1>
-      <p>Gerencie profissionais e clientes cadastrados na plataforma</p>
-    </div>
+    <div class="page-title"><h1>Painel Administrativo</h1><p>Gerencie profissionais e clientes</p></div>
 
     <div class="stats">
       <div class="stat"><div class="stat-num" id="stat-prof">—</div><div class="stat-lbl">Profissionais</div></div>
@@ -264,10 +164,7 @@ table tbody tr:hover{background:var(--blue-50)}
 
     <section id="tab-prof" class="tab-content">
       <div class="tabela-wrap">
-        <div class="tabela-top">
-          <h3>Profissionais</h3>
-          <input type="text" id="filtro-prof" placeholder="🔍 Buscar..." />
-        </div>
+        <div class="tabela-top"><h3>Profissionais</h3><input type="text" id="filtro-prof" placeholder="🔍 Buscar..." /></div>
         <div class="tabela-scroll">
           <table>
             <thead><tr><th>Nome</th><th>Cidade</th><th>Categorias</th><th>Status</th><th>Ações</th></tr></thead>
@@ -279,10 +176,7 @@ table tbody tr:hover{background:var(--blue-50)}
 
     <section id="tab-cli" class="tab-content hidden">
       <div class="tabela-wrap">
-        <div class="tabela-top">
-          <h3>Clientes</h3>
-          <input type="text" id="filtro-cli" placeholder="🔍 Buscar..." />
-        </div>
+        <div class="tabela-top"><h3>Clientes</h3><input type="text" id="filtro-cli" placeholder="🔍 Buscar..." /></div>
         <div class="tabela-scroll">
           <table>
             <thead><tr><th>Nome</th><th>Cidade</th><th>Tipo</th><th>Status</th><th>Ações</th></tr></thead>
@@ -296,391 +190,161 @@ table tbody tr:hover{background:var(--blue-50)}
 
 <script>
 const API_URL = 'https://servix-api-0qe6.onrender.com';
-const ENDPOINTS = {
-  health: '/api/health',
+const E = {
   login: '/api/admin/login',
-  cadastroStatus: '/api/admin/cadastro/status',
-  cadastro: '/api/admin/cadastro',
   dashboard: '/api/admin/dashboard',
-  profissionais: '/api/admin/profissionais',
-  clientes: '/api/admin/clientes',
+  prof: '/api/admin/profissionais',
+  cli: '/api/admin/clientes',
 };
+let listaProf = [], listaCli = [];
 
-let usuariosProfissionais = [];
-let usuariosClientes = [];
-let modoAuth = 'login';
-let cadastroPermitido = false;
-let cadastroExigeCodigo = false;
+function pegarToken(){return sessionStorage.getItem('servix_token')}
+function pegarUsuario(){try{const r=sessionStorage.getItem('servix_usuario');return r?JSON.parse(r):null}catch{return null}}
+function logout(){sessionStorage.removeItem('servix_token');sessionStorage.removeItem('servix_usuario');sessionStorage.removeItem('servix_tipo')}
 
-const telaLogin = document.getElementById('tela-login');
-const telaPainel = document.getElementById('tela-painel');
-const formLogin = document.getElementById('form-login');
-const formCadastro = document.getElementById('form-cadastro');
-const btnLogin = document.getElementById('btn-login');
-const btnCadastro = document.getElementById('btn-cadastro');
-const alertaAuth = document.getElementById('alerta-auth');
-const alertaPainel = document.getElementById('alerta-painel');
-const tabsAuth = document.getElementById('tabs-auth');
-const loginFooter = document.getElementById('login-footer');
-const infoConvite = document.getElementById('info-convite');
-const campoConvite = document.getElementById('campo-convite');
-
-function pegarToken(){ return sessionStorage.getItem('servix_token'); }
-function pegarTipo(){ return sessionStorage.getItem('servix_tipo'); }
-function pegarUsuario(){
-  try { const r = sessionStorage.getItem('servix_usuario'); return r ? JSON.parse(r) : null; }
-  catch { return null; }
-}
-function salvarSessao(t, u, tipo){
-  sessionStorage.setItem('servix_token', t);
-  sessionStorage.setItem('servix_usuario', JSON.stringify(u));
-  sessionStorage.setItem('servix_tipo', tipo);
-}
-function logout(){
-  sessionStorage.removeItem('servix_token');
-  sessionStorage.removeItem('servix_usuario');
-  sessionStorage.removeItem('servix_tipo');
+async function api(endpoint, metodo='GET', dados=null){
+  const op = {method: metodo, headers: {'Content-Type':'application/json'}};
+  const t = pegarToken();
+  if (t) op.headers['Authorization'] = `Bearer ${t}`;
+  if (dados) op.body = JSON.stringify(dados);
+  const res = await fetch(`${API_URL}${endpoint}`, op);
+  const json = await res.json().catch(()=>({}));
+  if (!res.ok) throw new Error(json.mensagem || `Erro ${res.status}`);
+  return json;
 }
 
-async function chamarAPI(endpoint, metodo='GET', dados=null, timeoutMs=60000){
-  const controller = new AbortController();
-  const tid = setTimeout(() => controller.abort(), timeoutMs);
-  const opcoes = {
-    method: metodo,
-    headers: {'Content-Type':'application/json'},
-    signal: controller.signal,
-  };
-  const token = pegarToken();
-  if (token) opcoes.headers['Authorization'] = `Bearer ${token}`;
-  if (dados && ['POST','PUT','PATCH'].includes(metodo)) opcoes.body = JSON.stringify(dados);
+function mostrar(el, tipo, msg){el.className=`alerta alerta-${tipo}`;el.textContent=msg;el.style.display='flex'}
+function esconder(el){el.style.display='none'}
+function ini(n){if(!n)return'?';return n.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase()}
+function dt(d){if(!d)return'—';return new Date(d).toLocaleDateString('pt-BR')}
 
-  try {
-    const res = await fetch(`${API_URL}${endpoint}`, opcoes);
-    clearTimeout(tid);
-    if (res.status === 204) return null;
-    const json = await res.json();
-    if (!res.ok) {
-      const err = new Error(json.mensagem || `Erro ${res.status}`);
-      err.status = res.status;
-      err.dados = json;
-      throw err;
-    }
-    return json;
-  } catch(err){
-    clearTimeout(tid);
-    if (err.name === 'AbortError') throw new Error('Servidor demorou para responder. Tente novamente.');
-    if (err.message && err.message.includes('fetch')) throw new Error('Sem conexão com o servidor.');
-    throw err;
-  }
-}
-
-async function acordarServidor(){
-  try { await fetch(`${API_URL}${ENDPOINTS.health}`, {method:'GET'}); return true; }
-  catch { return false; }
-}
-
-function mostrarAlerta(el, tipo, msg){
-  el.className = `alerta alerta-${tipo}`;
-  el.textContent = msg;
-  el.style.display = 'flex';
-  setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'center'}), 50);
-}
-function esconderAlerta(el){ el.style.display = 'none'; }
-
-function iniciais(n){if(!n)return'?';return n.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase()}
-function formatarData(d){if(!d)return'—';return new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}
-function loadingRow(cols, msg){
-  return `<tr><td colspan="${cols}" class="empty"><div class="loading-ico"></div><br>${msg}</td></tr>`;
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-  if (pegarToken() && (pegarTipo() === 'admin' || pegarTipo() === 'admin-pro')) {
-    entrarNoPainel();
-  } else if (pegarToken()) {
-    logout();
-  }
-
-  await verificarCadastro();
-
-  formLogin.addEventListener('submit', fazerLogin);
-  formCadastro.addEventListener('submit', fazerCadastro);
+document.addEventListener('DOMContentLoaded', () => {
+  if (pegarToken()) entrar();
+  document.getElementById('form-login').addEventListener('submit', fazerLogin);
   document.getElementById('btn-sair').addEventListener('click', () => { logout(); location.reload(); });
-
-  document.querySelectorAll('.tab-auth').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const m = tab.dataset.modo;
-      modoAuth = m;
-      document.querySelectorAll('.tab-auth').forEach(t => t.classList.remove('is-active'));
-      tab.classList.add('is-active');
-      esconderAlerta(alertaAuth);
-      if (m === 'login') {
-        formLogin.style.display = 'block';
-        formCadastro.style.display = 'none';
-      } else {
-        formLogin.style.display = 'none';
-        formCadastro.style.display = 'block';
-      }
-    });
-  });
 
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      const alvo = tab.dataset.tab;
+      const a = tab.dataset.tab;
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('is-active'));
       tab.classList.add('is-active');
       document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-      document.getElementById(`tab-${alvo}`).classList.remove('hidden');
+      document.getElementById(`tab-${a}`).classList.remove('hidden');
     });
   });
 
-  const fp = document.getElementById('filtro-prof');
-  const fc = document.getElementById('filtro-cli');
-  if (fp) fp.addEventListener('input', filtrarProfissionais);
-  if (fc) fc.addEventListener('input', filtrarClientes);
+  document.getElementById('filtro-prof').addEventListener('input', () => {
+    const t = document.getElementById('filtro-prof').value.toLowerCase();
+    renderProf(listaProf.filter(p => (p.nome||'').toLowerCase().includes(t)));
+  });
+  document.getElementById('filtro-cli').addEventListener('input', () => {
+    const t = document.getElementById('filtro-cli').value.toLowerCase();
+    renderCli(listaCli.filter(c => (c.nome||'').toLowerCase().includes(t)));
+  });
 });
-
-async function verificarCadastro() {
-  try {
-    const r = await chamarAPI(ENDPOINTS.cadastroStatus);
-    cadastroPermitido = r.permitido;
-    cadastroExigeCodigo = r.exigeCodigo;
-
-    if (cadastroPermitido) {
-      tabsAuth.style.display = 'grid';
-      if (cadastroExigeCodigo) {
-        infoConvite.style.display = 'block';
-        campoConvite.style.display = 'grid';
-      }
-      loginFooter.textContent = 'O cadastro está aberto no momento.';
-    } else {
-      tabsAuth.style.display = 'none';
-      loginFooter.textContent = 'O cadastro está fechado. Fale com o administrador.';
-    }
-  } catch(e) {
-    tabsAuth.style.display = 'none';
-  }
-}
 
 async function fazerLogin(e){
   e.preventDefault();
-  esconderAlerta(alertaAuth);
-
-  const email = formLogin.email.value.trim();
-  const senha = formLogin.senha.value;
-
-  if (!email || !senha){
-    mostrarAlerta(alertaAuth, 'erro', 'Preencha e-mail e senha.');
-    return;
-  }
-
-  btnLogin.classList.add('loading');
-  btnLogin.disabled = true;
-  mostrarAlerta(alertaAuth, 'info', '⏳ Conectando...');
-
+  esconder(document.getElementById('alerta-login'));
+  const f = document.getElementById('form-login');
+  const email = f.email.value.trim();
+  const senha = f.senha.value;
+  if (!email || !senha) return mostrar(document.getElementById('alerta-login'),'erro','Preencha tudo');
+  const btn = document.getElementById('btn-login');
+  btn.classList.add('loading'); btn.disabled = true;
   try {
-    await acordarServidor();
-    const json = await chamarAPI(ENDPOINTS.login, 'POST', { email, senha });
-    salvarSessao(json.dados.token, json.dados.admin, 'admin');
-    alertaAuth.className = 'alerta alerta-sucesso';
-    alertaAuth.textContent = '✅ Login realizado!';
-    setTimeout(() => entrarNoPainel(), 400);
-  } catch(err){
-    mostrarAlerta(alertaAuth, 'erro', err.message || 'Erro ao fazer login');
-  } finally {
-    btnLogin.classList.remove('loading');
-    btnLogin.disabled = false;
-  }
+    const r = await api(E.login, 'POST', { email, senha });
+    sessionStorage.setItem('servix_token', r.dados.token);
+    sessionStorage.setItem('servix_usuario', JSON.stringify(r.dados.admin));
+    sessionStorage.setItem('servix_tipo', 'admin');
+    mostrar(document.getElementById('alerta-login'),'sucesso','✅ Login!');
+    setTimeout(entrar, 500);
+  } catch(e){
+    mostrar(document.getElementById('alerta-login'),'erro', e.message);
+  } finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
 
-async function fazerCadastro(e){
-  e.preventDefault();
-  esconderAlerta(alertaAuth);
-  limparErros(formCadastro);
-
-  const nome = formCadastro.nome.value.trim();
-  const email = formCadastro.email.value.trim();
-  const telefone = formCadastro.telefone.value.trim();
-  const senha = formCadastro.senha.value;
-  const senhaConfirm = formCadastro.senhaConfirm.value;
-  const codigoConvite = formCadastro.codigoConvite ? formCadastro.codigoConvite.value.trim() : '';
-
-  const erros = [];
-  if (!nome || nome.length < 3) erros.push(['nome', 'Informe seu nome completo']);
-  if (!email || !/^\S+@\S+\.\S+$/.test(email)) erros.push(['email', 'E-mail inválido']);
-  if (!senha || senha.length < 8) erros.push(['senha', 'Mínimo 8 caracteres']);
-  if (senha !== senhaConfirm) erros.push(['senhaConfirm', 'As senhas não coincidem']);
-  if (cadastroExigeCodigo && !codigoConvite) erros.push(['codigoConvite', 'Digite o código de convite']);
-
-  if (erros.length){
-    erros.forEach(([n,m]) => marcarErro(formCadastro, n, m));
-    mostrarAlerta(alertaAuth, 'erro', 'Corrija os campos destacados.');
-    return;
-  }
-
-  btnCadastro.classList.add('loading');
-  btnCadastro.disabled = true;
-  mostrarAlerta(alertaAuth, 'info', '⏳ Criando sua conta...');
-
-  try {
-    await acordarServidor();
-    const payload = { nome, email: email.toLowerCase(), senha };
-    if (telefone) payload.telefone = telefone;
-    if (codigoConvite) payload.codigoConvite = codigoConvite;
-
-    const json = await chamarAPI(ENDPOINTS.cadastro, 'POST', payload);
-    salvarSessao(json.dados.token, json.dados.admin, 'admin');
-    alertaAuth.className = 'alerta alerta-sucesso';
-    alertaAuth.textContent = '🎉 Cadastro realizado!';
-    setTimeout(() => entrarNoPainel(), 800);
-  } catch(err){
-    if (err.dados && err.dados.erros){
-      err.dados.erros.forEach(e => marcarErro(formCadastro, e.campo, e.mensagem));
-      mostrarAlerta(alertaAuth, 'erro', 'Corrija os campos destacados.');
-    } else {
-      mostrarAlerta(alertaAuth, 'erro', err.message || 'Erro ao cadastrar');
-    }
-  } finally {
-    btnCadastro.classList.remove('loading');
-    btnCadastro.disabled = false;
-  }
-}
-
-async function entrarNoPainel(){
-  telaLogin.style.display = 'none';
-  telaPainel.classList.add('ativo');
-
+async function entrar(){
+  document.getElementById('tela-login').style.display = 'none';
+  document.getElementById('tela-painel').classList.add('ativo');
   const u = pegarUsuario();
   if (u) document.getElementById('nome-usuario').textContent = u.nome || u.email;
 
-  document.getElementById('lista-prof').innerHTML = loadingRow(5, 'Carregando...');
-  document.getElementById('lista-cli').innerHTML = loadingRow(5, 'Carregando...');
+  document.getElementById('lista-prof').innerHTML = `<tr><td colspan="5" class="empty"><div class="loading-ico"></div></td></tr>`;
+  document.getElementById('lista-cli').innerHTML = `<tr><td colspan="5" class="empty"><div class="loading-ico"></div></td></tr>`;
 
-  await Promise.allSettled([
-    carregarDashboard(),
-    carregarProfissionais(),
-    carregarClientes(),
-  ]);
+  await Promise.allSettled([dash(), carregarProf(), carregarCli()]);
 }
 
-async function carregarDashboard(){
+async function dash(){
   try {
-    const r = await chamarAPI(ENDPOINTS.dashboard);
+    const r = await api(E.dashboard);
     const d = r.dados;
     document.getElementById('stat-prof').textContent = d.profissionais ?? 0;
     document.getElementById('stat-prof-pend').textContent = d.profissionaisPendentes ?? 0;
     document.getElementById('stat-clientes').textContent = d.clientes ?? 0;
     document.getElementById('stat-clientes-ativos').textContent = d.clientesAtivos ?? 0;
-  } catch(e){ console.error('Dashboard:', e); }
+  } catch(e){ console.error(e); }
 }
 
-async function carregarProfissionais(){
-  try {
-    const r = await chamarAPI(ENDPOINTS.profissionais);
-    usuariosProfissionais = r.dados || [];
-    renderizarProfissionais(usuariosProfissionais);
-  } catch(e){
-    document.getElementById('lista-prof').innerHTML = `<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`;
-  }
+async function carregarProf(){
+  try { const r = await api(E.prof); listaProf = r.dados || []; renderProf(listaProf); }
+  catch(e){ document.getElementById('lista-prof').innerHTML = `<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`; }
 }
 
-function renderizarProfissionais(lista){
+function renderProf(lista){
   const tbody = document.getElementById('lista-prof');
-  if (!lista || lista.length === 0){
-    tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional cadastrado.</td></tr>`;
-    return;
-  }
+  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional.</td></tr>`; return; }
   tbody.innerHTML = lista.map(p => `
     <tr>
-      <td><div class="usuario-cell"><div class="avatar">${iniciais(p.nome)}</div><div><div class="nome">${p.nome||'—'}</div><div class="email">${p.email||'—'}</div></div></div></td>
+      <td><div class="usuario-cell"><div class="avatar">${ini(p.nome)}</div><div><div class="nome">${p.nome}</div><div class="email">${p.email}</div></div></div></td>
       <td>${p.cidade||'—'}/${p.estado||'—'}</td>
-      <td>${(p.categorias||[]).slice(0,2).join(', ')}${(p.categorias||[]).length>2?'...':''}</td>
+      <td>${(p.categorias||[]).slice(0,2).join(', ')}</td>
       <td><span class="badge badge-${p.status}">${p.status}</span></td>
       <td><div class="acoes">
-        <button class="btn-sm btn-outline" onclick="mudarStatusProf('${p._id}', 'ativo')">Ativar</button>
-        <button class="btn-sm btn-danger" onclick="mudarStatusProf('${p._id}', 'suspenso')">Suspender</button>
+        <button class="btn-sm btn-outline" onclick="mudarStatusProf('${p._id}','ativo')">Ativar</button>
+        <button class="btn-sm btn-danger" onclick="mudarStatusProf('${p._id}','suspenso')">Suspender</button>
       </div></td>
     </tr>
   `).join('');
 }
 
-function filtrarProfissionais(){
-  const t = document.getElementById('filtro-prof').value.toLowerCase();
-  const f = usuariosProfissionais.filter(p => (p.nome||'').toLowerCase().includes(t) || (p.email||'').toLowerCase().includes(t));
-  renderizarProfissionais(f);
+async function carregarCli(){
+  try { const r = await api(E.cli); listaCli = r.dados || []; renderCli(listaCli); }
+  catch(e){ document.getElementById('lista-cli').innerHTML = `<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`; }
+}
+
+function renderCli(lista){
+  const tbody = document.getElementById('lista-cli');
+  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente.</td></tr>`; return; }
+  tbody.innerHTML = lista.map(c => `
+    <tr>
+      <td><div class="usuario-cell"><div class="avatar">${ini(c.nome)}</div><div><div class="nome">${c.nome}</div><div class="email">${c.email}</div></div></div></td>
+      <td>${c.cidade||'—'}/${c.estado||'—'}</td>
+      <td>${c.tipo==='empresa'?'🏢 Empresa':'👤 Pessoa Física'}</td>
+      <td><span class="badge badge-${c.status}">${c.status}</span></td>
+      <td><div class="acoes">
+        <button class="btn-sm btn-outline" onclick="mudarStatusCli('${c._id}','ativo')">Ativar</button>
+        <button class="btn-sm btn-danger" onclick="mudarStatusCli('${c._id}','bloqueado')">Bloquear</button>
+      </div></td>
+    </tr>
+  `).join('');
 }
 
 async function mudarStatusProf(id, status){
   try {
-    await chamarAPI(`${ENDPOINTS.profissionais}/${id}/status`, 'PATCH', { status });
-    await carregarProfissionais();
-    await carregarDashboard();
-    mostrarAlerta(alertaPainel, 'sucesso', 'Status atualizado!');
-  } catch(e){ mostrarAlerta(alertaPainel, 'erro', e.message); }
-}
-
-async function carregarClientes(){
-  try {
-    const r = await chamarAPI(ENDPOINTS.clientes);
-    usuariosClientes = r.dados || [];
-    renderizarClientes(usuariosClientes);
-  } catch(e){
-    document.getElementById('lista-cli').innerHTML = `<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`;
-  }
-}
-
-function renderizarClientes(lista){
-  const tbody = document.getElementById('lista-cli');
-  if (!lista || lista.length === 0){
-    tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente cadastrado.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = lista.map(c => `
-    <tr>
-      <td><div class="usuario-cell"><div class="avatar">${iniciais(c.nome)}</div><div><div class="nome">${c.nome||'—'}</div><div class="email">${c.email||'—'}</div></div></div></td>
-      <td>${c.cidade||'—'}/${c.estado||'—'}</td>
-      <td>${c.tipo === 'empresa' ? '🏢 Empresa' : '👤 Pessoa Física'}</td>
-      <td><span class="badge badge-${c.status}">${c.status}</span></td>
-      <td><div class="acoes">
-        <button class="btn-sm btn-outline" onclick="mudarStatusCli('${c._id}', 'ativo')">Ativar</button>
-        <button class="btn-sm btn-danger" onclick="mudarStatusCli('${c._id}', 'bloqueado')">Bloquear</button>
-      </div></td>
-    </tr>
-  `).join('');
-}
-
-function filtrarClientes(){
-  const t = document.getElementById('filtro-cli').value.toLowerCase();
-  const f = usuariosClientes.filter(c => (c.nome||'').toLowerCase().includes(t) || (c.email||'').toLowerCase().includes(t));
-  renderizarClientes(f);
+    await api(`${E.prof}/${id}/status`, 'PATCH', { status });
+    await Promise.all([carregarProf(), dash()]);
+    mostrar(document.getElementById('alerta-painel'),'sucesso','Status atualizado!');
+  } catch(e){ mostrar(document.getElementById('alerta-painel'),'erro', e.message); }
 }
 
 async function mudarStatusCli(id, status){
   try {
-    await chamarAPI(`${ENDPOINTS.clientes}/${id}/status`, 'PATCH', { status });
-    await carregarClientes();
-    await carregarDashboard();
-    mostrarAlerta(alertaPainel, 'sucesso', 'Status atualizado!');
-  } catch(e){ mostrarAlerta(alertaPainel, 'erro', e.message); }
-}
-
-function limparErros(form){
-  form.querySelectorAll('.field').forEach(f => {
-    f.classList.remove('has-err');
-    const i = f.querySelector('input');
-    if (i) i.classList.remove('err');
-    const m = f.querySelector('.err');
-    if (m) m.textContent = '';
-  });
-}
-function marcarErro(form, nome, msg){
-  const i = form.querySelector(`[name="${nome}"]`);
-  if (!i) return;
-  const f = i.closest('.field');
-  if (!f) return;
-  f.classList.add('has-err');
-  i.classList.add('err');
-  const m = f.querySelector('.err');
-  if (m) m.textContent = msg;
+    await api(`${E.cli}/${id}/status`, 'PATCH', { status });
+    await Promise.all([carregarCli(), dash()]);
+    mostrar(document.getElementById('alerta-painel'),'sucesso','Status atualizado!');
+  } catch(e){ mostrar(document.getElementById('alerta-painel'),'erro', e.message); }
 }
 
 window.mudarStatusProf = mudarStatusProf;
