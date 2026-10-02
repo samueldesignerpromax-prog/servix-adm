@@ -7,13 +7,12 @@
 <link rel="icon" type="image/png" href="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preconnect" href="https://servix-api-1.onrender.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue-600:#1D4ED8;--blue-700:#1D3F9E;--blue-500:#2E6BF0;--blue-50:#EEF3FF;--blue-100:#DCE7FF;
+  --blue-600:#1D4ED8;--blue-700:#1D3F9E;--blue-500:#2E6BF0;--blue-50:#EEF3FF;
   --green-500:#22C55E;--green-600:#16A34A;--green-700:#15803D;--green-100:#DCFCE7;--green-50:#F0FDF4;
   --red-500:#EF4444;--red-600:#DC2626;--red-700:#B91C1C;--red-100:#FEE2E2;--red-50:#FEF2F2;
   --yellow-500:#FACC15;--yellow-100:#FEF9C3;--yellow-700:#CA8A04;
@@ -29,7 +28,7 @@ img{max-width:100%;display:block}
 button{cursor:pointer;border:0;background:none;font:inherit}
 input,select,textarea{font:inherit}
 
-/* ============ LOGIN / CADASTRO ============ */
+/* LOGIN/CADASTRO */
 .login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(800px 400px at 80% 0%,rgba(29,78,216,.10),transparent 60%),radial-gradient(600px 400px at 10% 100%,rgba(34,197,94,.08),transparent 60%),linear-gradient(180deg,#fff,var(--bg))}
 .login-box{width:100%;max-width:440px;background:#fff;border:1.5px solid var(--ink-200);border-radius:22px;padding:40px 34px;box-shadow:0 24px 60px rgba(15,23,42,.12);position:relative;overflow:hidden;text-align:center}
 .login-box::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue-500),var(--green-500),var(--yellow-500),var(--red-500))}
@@ -68,7 +67,7 @@ small.err{color:var(--red-600);font-size:.78rem;font-weight:600;display:none}
 
 .login-footer{margin-top:20px;font-size:.82rem;color:var(--ink-500);text-align:center;line-height:1.5}
 
-/* ============ PAINEL ============ */
+/* PAINEL */
 .painel-page{display:none;min-height:100vh;background:var(--bg)}
 .painel-page.ativo{display:block}
 .painel-header{background:#fff;border-bottom:1px solid var(--ink-200);position:sticky;top:0;z-index:10}
@@ -137,7 +136,7 @@ table tbody tr:hover{background:var(--blue-50)}
 
 .empty{text-align:center;padding:50px 20px;color:var(--ink-500)}
 .empty .ico{font-size:2.5rem;margin-bottom:10px;opacity:.4}
-.empty .loading-ico{display:inline-block;width:24px;height:24px;border:3px solid var(--blue-100);border-top-color:var(--blue-600);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:10px}
+.empty .loading-ico{display:inline-block;width:24px;height:24px;border:3px solid var(--blue-50);border-top-color:var(--blue-600);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:10px}
 
 @media (max-width:600px){
   .login-box{padding:30px 22px}
@@ -149,7 +148,7 @@ table tbody tr:hover{background:var(--blue-50)}
 </head>
 <body>
 
-<!-- ============ LOGIN / CADASTRO ============ -->
+<!-- LOGIN / CADASTRO -->
 <div class="login-wrap" id="tela-login">
   <div class="login-box">
     <div class="login-logo">
@@ -165,7 +164,6 @@ table tbody tr:hover{background:var(--blue-50)}
 
     <div id="alerta-auth" class="alerta" style="display:none;"></div>
 
-    <!-- FORM LOGIN -->
     <form id="form-login">
       <div class="field">
         <label>E-mail</label>
@@ -181,7 +179,6 @@ table tbody tr:hover{background:var(--blue-50)}
       </button>
     </form>
 
-    <!-- FORM CADASTRO -->
     <form id="form-cadastro" style="display:none;">
       <div class="cadastro-info" id="info-convite" style="display:none;">
         🔒 Para se cadastrar, você precisa do <strong>código de convite</strong> fornecido pelo administrador PRO.
@@ -229,9 +226,8 @@ table tbody tr:hover{background:var(--blue-50)}
   </div>
 </div>
 
-<!-- ============ PAINEL ============ -->
+<!-- PAINEL -->
 <div class="painel-page" id="tela-painel">
-
   <header class="painel-header">
     <div class="painel-header-inner">
       <div class="brand">
@@ -299,8 +295,7 @@ table tbody tr:hover{background:var(--blue-50)}
 </div>
 
 <script>
-/* ========== CONFIG ========== */
-const API_URL = 'https://servix-api-1.onrender.com';
+const API_URL = 'https://servix-api-0qe6.onrender.com';
 const ENDPOINTS = {
   health: '/api/health',
   login: '/api/admin/login',
@@ -311,14 +306,12 @@ const ENDPOINTS = {
   clientes: '/api/admin/clientes',
 };
 
-/* ========== ESTADO ========== */
 let usuariosProfissionais = [];
 let usuariosClientes = [];
 let modoAuth = 'login';
 let cadastroPermitido = false;
 let cadastroExigeCodigo = false;
 
-/* ========== ELEMENTOS ========== */
 const telaLogin = document.getElementById('tela-login');
 const telaPainel = document.getElementById('tela-painel');
 const formLogin = document.getElementById('form-login');
@@ -332,7 +325,6 @@ const loginFooter = document.getElementById('login-footer');
 const infoConvite = document.getElementById('info-convite');
 const campoConvite = document.getElementById('campo-convite');
 
-/* ========== AUTH (sessionStorage = NÃO permanente) ========== */
 function pegarToken(){ return sessionStorage.getItem('servix_token'); }
 function pegarTipo(){ return sessionStorage.getItem('servix_tipo'); }
 function pegarUsuario(){
@@ -350,7 +342,6 @@ function logout(){
   sessionStorage.removeItem('servix_tipo');
 }
 
-/* ========== API ========== */
 async function chamarAPI(endpoint, metodo='GET', dados=null, timeoutMs=60000){
   const controller = new AbortController();
   const tid = setTimeout(() => controller.abort(), timeoutMs);
@@ -388,7 +379,6 @@ async function acordarServidor(){
   catch { return false; }
 }
 
-/* ========== ALERTAS ========== */
 function mostrarAlerta(el, tipo, msg){
   el.className = `alerta alerta-${tipo}`;
   el.textContent = msg;
@@ -397,31 +387,25 @@ function mostrarAlerta(el, tipo, msg){
 }
 function esconderAlerta(el){ el.style.display = 'none'; }
 
-/* ========== UTIL ========== */
 function iniciais(n){if(!n)return'?';return n.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase()}
 function formatarData(d){if(!d)return'—';return new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}
 function loadingRow(cols, msg){
   return `<tr><td colspan="${cols}" class="empty"><div class="loading-ico"></div><br>${msg}</td></tr>`;
 }
 
-/* ========== INIT ========== */
 document.addEventListener('DOMContentLoaded', async () => {
-  // Se já tem token na sessão, entra direto
   if (pegarToken() && (pegarTipo() === 'admin' || pegarTipo() === 'admin-pro')) {
     entrarNoPainel();
   } else if (pegarToken()) {
     logout();
   }
 
-  // Verifica se o cadastro está liberado no backend
   await verificarCadastro();
 
-  // Listeners
   formLogin.addEventListener('submit', fazerLogin);
   formCadastro.addEventListener('submit', fazerCadastro);
   document.getElementById('btn-sair').addEventListener('click', () => { logout(); location.reload(); });
 
-  // Tabs de login/cadastro
   document.querySelectorAll('.tab-auth').forEach(tab => {
     tab.addEventListener('click', () => {
       const m = tab.dataset.modo;
@@ -439,7 +423,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Tabs do painel
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       const alvo = tab.dataset.tab;
@@ -450,14 +433,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Filtros
   const fp = document.getElementById('filtro-prof');
   const fc = document.getElementById('filtro-cli');
   if (fp) fp.addEventListener('input', filtrarProfissionais);
   if (fc) fc.addEventListener('input', filtrarClientes);
 });
 
-/* ========== VERIFICAR CADASTRO ========== */
 async function verificarCadastro() {
   try {
     const r = await chamarAPI(ENDPOINTS.cadastroStatus);
@@ -476,12 +457,10 @@ async function verificarCadastro() {
       loginFooter.textContent = 'O cadastro está fechado. Fale com o administrador.';
     }
   } catch(e) {
-    // Se der erro, esconde o cadastro
     tabsAuth.style.display = 'none';
   }
 }
 
-/* ========== LOGIN ========== */
 async function fazerLogin(e){
   e.preventDefault();
   esconderAlerta(alertaAuth);
@@ -501,12 +480,9 @@ async function fazerLogin(e){
   try {
     await acordarServidor();
     const json = await chamarAPI(ENDPOINTS.login, 'POST', { email, senha });
-
     salvarSessao(json.dados.token, json.dados.admin, 'admin');
-
     alertaAuth.className = 'alerta alerta-sucesso';
-    alertaAuth.textContent = '✅ Login realizado! Carregando painel...';
-
+    alertaAuth.textContent = '✅ Login realizado!';
     setTimeout(() => entrarNoPainel(), 400);
   } catch(err){
     mostrarAlerta(alertaAuth, 'erro', err.message || 'Erro ao fazer login');
@@ -516,7 +492,6 @@ async function fazerLogin(e){
   }
 }
 
-/* ========== CADASTRO ========== */
 async function fazerCadastro(e){
   e.preventDefault();
   esconderAlerta(alertaAuth);
@@ -553,12 +528,9 @@ async function fazerCadastro(e){
     if (codigoConvite) payload.codigoConvite = codigoConvite;
 
     const json = await chamarAPI(ENDPOINTS.cadastro, 'POST', payload);
-
     salvarSessao(json.dados.token, json.dados.admin, 'admin');
-
     alertaAuth.className = 'alerta alerta-sucesso';
-    alertaAuth.textContent = '🎉 Cadastro realizado! Entrando no painel...';
-
+    alertaAuth.textContent = '🎉 Cadastro realizado!';
     setTimeout(() => entrarNoPainel(), 800);
   } catch(err){
     if (err.dados && err.dados.erros){
@@ -573,7 +545,6 @@ async function fazerCadastro(e){
   }
 }
 
-/* ========== PAINEL ========== */
 async function entrarNoPainel(){
   telaLogin.style.display = 'none';
   telaPainel.classList.add('ativo');
@@ -581,8 +552,8 @@ async function entrarNoPainel(){
   const u = pegarUsuario();
   if (u) document.getElementById('nome-usuario').textContent = u.nome || u.email;
 
-  document.getElementById('lista-prof').innerHTML = loadingRow(5, 'Carregando profissionais...');
-  document.getElementById('lista-cli').innerHTML = loadingRow(5, 'Carregando clientes...');
+  document.getElementById('lista-prof').innerHTML = loadingRow(5, 'Carregando...');
+  document.getElementById('lista-cli').innerHTML = loadingRow(5, 'Carregando...');
 
   await Promise.allSettled([
     carregarDashboard(),
@@ -692,7 +663,6 @@ async function mudarStatusCli(id, status){
   } catch(e){ mostrarAlerta(alertaPainel, 'erro', e.message); }
 }
 
-/* ========== HELPERS DE ERRO ========== */
 function limparErros(form){
   form.querySelectorAll('.field').forEach(f => {
     f.classList.remove('has-err');
@@ -702,7 +672,6 @@ function limparErros(form){
     if (m) m.textContent = '';
   });
 }
-
 function marcarErro(form, nome, msg){
   const i = form.querySelector(`[name="${nome}"]`);
   if (!i) return;
