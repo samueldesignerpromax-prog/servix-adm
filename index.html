@@ -55,11 +55,13 @@ input{font:inherit}
 .tag-admin{font-size:.72rem;font-weight:800;padding:4px 10px;background:linear-gradient(135deg,var(--blue-600),var(--blue-700));color:#fff;border-radius:999px}
 .header-right{display:flex;align-items:center;gap:14px}
 .user-name{font-size:.9rem;font-weight:600;color:var(--ink-700)}
+.btn-refresh{padding:8px 14px;border-radius:999px;background:var(--blue-50);color:var(--blue-700);font-weight:700;font-size:.82rem}
+.btn-refresh:hover{background:var(--blue-600);color:#fff}
 .btn-sair{padding:8px 16px;border-radius:999px;background:var(--red-50);color:var(--red-600);font-weight:700;font-size:.85rem}
 .btn-sair:hover{background:var(--red-500);color:#fff}
 
 .painel-main{max-width:1300px;margin:0 auto;padding:30px 24px 60px}
-.page-title{margin-bottom:26px}
+.page-title{margin-bottom:26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .page-title h1{font-size:1.7rem;font-weight:800;margin-bottom:4px}
 .page-title p{color:var(--ink-500);font-size:.95rem}
 
@@ -142,13 +144,20 @@ table tbody tr:hover{background:var(--blue-50)}
       <div class="brand"><img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" /><span>SERVIX</span><span class="tag-admin">ADMIN</span></div>
       <div class="header-right">
         <span id="nome-usuario" class="user-name"></span>
+        <button class="btn-refresh" id="btn-refresh">🔄 Atualizar</button>
         <button class="btn-sair" id="btn-sair">Sair</button>
       </div>
     </div>
   </header>
   <main class="painel-main">
     <div id="alerta-painel" class="alerta" style="display:none;"></div>
-    <div class="page-title"><h1>Painel Administrativo</h1><p>Gerencie profissionais e clientes</p></div>
+    <div class="page-title">
+      <div>
+        <h1>Painel Administrativo</h1>
+        <p>Gerencie profissionais e clientes</p>
+      </div>
+      <span id="ultima-atualizacao" style="font-size:.82rem;color:var(--ink-500);"></span>
+    </div>
 
     <div class="stats">
       <div class="stat"><div class="stat-num" id="stat-prof">—</div><div class="stat-lbl">Profissionais</div></div>
@@ -197,13 +206,18 @@ const E = {
   cli: '/api/admin/clientes',
 };
 let listaProf = [], listaCli = [];
+let intervalo = null;
 
 function pegarToken(){return sessionStorage.getItem('servix_token')}
 function pegarUsuario(){try{const r=sessionStorage.getItem('servix_usuario');return r?JSON.parse(r):null}catch{return null}}
 function logout(){sessionStorage.removeItem('servix_token');sessionStorage.removeItem('servix_usuario');sessionStorage.removeItem('servix_tipo')}
 
 async function api(endpoint, metodo='GET', dados=null){
-  const op = {method: metodo, headers: {'Content-Type':'application/json'}};
+  const op = {
+    method: metodo,
+    headers: {'Content-Type':'application/json'},
+    cache: 'no-store',
+  };
   const t = pegarToken();
   if (t) op.headers['Authorization'] = `Bearer ${t}`;
   if (dados) op.body = JSON.stringify(dados);
@@ -216,12 +230,20 @@ async function api(endpoint, metodo='GET', dados=null){
 function mostrar(el, tipo, msg){el.className=`alerta alerta-${tipo}`;el.textContent=msg;el.style.display='flex'}
 function esconder(el){el.style.display='none'}
 function ini(n){if(!n)return'?';return n.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase()}
-function dt(d){if(!d)return'—';return new Date(d).toLocaleDateString('pt-BR')}
+function dt(d){if(!d)return'—';return new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function hora(){return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+
+async function atualizarTudo(){
+  document.getElementById('ultima-atualizacao').textContent = 'Atualizando...';
+  await Promise.allSettled([dash(), carregarProf(), carregarCli()]);
+  document.getElementById('ultima-atualizacao').textContent = `Atualizado às ${hora()}`;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   if (pegarToken()) entrar();
   document.getElementById('form-login').addEventListener('submit', fazerLogin);
-  document.getElementById('btn-sair').addEventListener('click', () => { logout(); location.reload(); });
+  document.getElementById('btn-sair').addEventListener('click', () => { logout(); if(intervalo) clearInterval(intervalo); location.reload(); });
+  document.getElementById('btn-refresh').addEventListener('click', atualizarTudo);
 
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -235,11 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('filtro-prof').addEventListener('input', () => {
     const t = document.getElementById('filtro-prof').value.toLowerCase();
-    renderProf(listaProf.filter(p => (p.nome||'').toLowerCase().includes(t)));
+    renderProf(listaProf.filter(p => (p.nome||'').toLowerCase().includes(t) || (p.email||'').toLowerCase().includes(t)));
   });
   document.getElementById('filtro-cli').addEventListener('input', () => {
     const t = document.getElementById('filtro-cli').value.toLowerCase();
-    renderCli(listaCli.filter(c => (c.nome||'').toLowerCase().includes(t)));
+    renderCli(listaCli.filter(c => (c.nome||'').toLowerCase().includes(t) || (c.email||'').toLowerCase().includes(t)));
   });
 });
 
@@ -273,7 +295,10 @@ async function entrar(){
   document.getElementById('lista-prof').innerHTML = `<tr><td colspan="5" class="empty"><div class="loading-ico"></div></td></tr>`;
   document.getElementById('lista-cli').innerHTML = `<tr><td colspan="5" class="empty"><div class="loading-ico"></div></td></tr>`;
 
-  await Promise.allSettled([dash(), carregarProf(), carregarCli()]);
+  await atualizarTudo();
+
+  if (intervalo) clearInterval(intervalo);
+  intervalo = setInterval(atualizarTudo, 10000);
 }
 
 async function dash(){
@@ -294,7 +319,7 @@ async function carregarProf(){
 
 function renderProf(lista){
   const tbody = document.getElementById('lista-prof');
-  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional.</td></tr>`; return; }
+  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional cadastrado ainda.</td></tr>`; return; }
   tbody.innerHTML = lista.map(p => `
     <tr>
       <td><div class="usuario-cell"><div class="avatar">${ini(p.nome)}</div><div><div class="nome">${p.nome}</div><div class="email">${p.email}</div></div></div></td>
@@ -316,7 +341,7 @@ async function carregarCli(){
 
 function renderCli(lista){
   const tbody = document.getElementById('lista-cli');
-  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente.</td></tr>`; return; }
+  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente cadastrado ainda.</td></tr>`; return; }
   tbody.innerHTML = lista.map(c => `
     <tr>
       <td><div class="usuario-cell"><div class="avatar">${ini(c.nome)}</div><div><div class="nome">${c.nome}</div><div class="email">${c.email}</div></div></div></td>
@@ -334,7 +359,7 @@ function renderCli(lista){
 async function mudarStatusProf(id, status){
   try {
     await api(`${E.prof}/${id}/status`, 'PATCH', { status });
-    await Promise.all([carregarProf(), dash()]);
+    await atualizarTudo();
     mostrar(document.getElementById('alerta-painel'),'sucesso','Status atualizado!');
   } catch(e){ mostrar(document.getElementById('alerta-painel'),'erro', e.message); }
 }
@@ -342,7 +367,7 @@ async function mudarStatusProf(id, status){
 async function mudarStatusCli(id, status){
   try {
     await api(`${E.cli}/${id}/status`, 'PATCH', { status });
-    await Promise.all([carregarCli(), dash()]);
+    await atualizarTudo();
     mostrar(document.getElementById('alerta-painel'),'sucesso','Status atualizado!');
   } catch(e){ mostrar(document.getElementById('alerta-painel'),'erro', e.message); }
 }
