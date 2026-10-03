@@ -116,6 +116,7 @@ table tbody tr:hover{background:var(--blue-50)}
 .empty{text-align:center;padding:50px 20px;color:var(--ink-500)}
 .empty .ico{font-size:2.5rem;margin-bottom:10px;opacity:.4}
 .empty .loading-ico{display:inline-block;width:24px;height:24px;border:3px solid var(--blue-50);border-top-color:var(--blue-600);border-radius:50%;animation:spin .8s linear infinite}
+@media(max-width:600px){.login-box{padding:30px 22px}.painel-main{padding:20px 16px 40px}.user-name{display:none}}
 </style>
 </head>
 <body>
@@ -213,11 +214,7 @@ function pegarUsuario(){try{const r=sessionStorage.getItem('servix_usuario');ret
 function logout(){sessionStorage.removeItem('servix_token');sessionStorage.removeItem('servix_usuario');sessionStorage.removeItem('servix_tipo')}
 
 async function api(endpoint, metodo='GET', dados=null){
-  const op = {
-    method: metodo,
-    headers: {'Content-Type':'application/json'},
-    cache: 'no-store',
-  };
+  const op = {method: metodo, headers: {'Content-Type':'application/json'}, cache: 'no-store'};
   const t = pegarToken();
   if (t) op.headers['Authorization'] = `Bearer ${t}`;
   if (dados) op.body = JSON.stringify(dados);
@@ -230,7 +227,7 @@ async function api(endpoint, metodo='GET', dados=null){
 function mostrar(el, tipo, msg){el.className=`alerta alerta-${tipo}`;el.textContent=msg;el.style.display='flex'}
 function esconder(el){el.style.display='none'}
 function ini(n){if(!n)return'?';return n.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase()}
-function dt(d){if(!d)return'—';return new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function dt(d){if(!d)return'—';try{return new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return'—'}}
 function hora(){return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 
 async function atualizarTudo(){
@@ -291,14 +288,11 @@ async function entrar(){
   document.getElementById('tela-painel').classList.add('ativo');
   const u = pegarUsuario();
   if (u) document.getElementById('nome-usuario').textContent = u.nome || u.email;
-
   document.getElementById('lista-prof').innerHTML = `<tr><td colspan="5" class="empty"><div class="loading-ico"></div></td></tr>`;
   document.getElementById('lista-cli').innerHTML = `<tr><td colspan="5" class="empty"><div class="loading-ico"></div></td></tr>`;
-
   await atualizarTudo();
-
   if (intervalo) clearInterval(intervalo);
-  intervalo = setInterval(atualizarTudo, 10000);
+  intervalo = setInterval(atualizarTudo, 8000);
 }
 
 async function dash(){
@@ -319,7 +313,7 @@ async function carregarProf(){
 
 function renderProf(lista){
   const tbody = document.getElementById('lista-prof');
-  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional cadastrado ainda.</td></tr>`; return; }
+  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👷</div>Nenhum profissional cadastrado.</td></tr>`; return; }
   tbody.innerHTML = lista.map(p => `
     <tr>
       <td><div class="usuario-cell"><div class="avatar">${ini(p.nome)}</div><div><div class="nome">${p.nome}</div><div class="email">${p.email}</div></div></div></td>
@@ -327,8 +321,8 @@ function renderProf(lista){
       <td>${(p.categorias||[]).slice(0,2).join(', ')}</td>
       <td><span class="badge badge-${p.status}">${p.status}</span></td>
       <td><div class="acoes">
-        <button class="btn-sm btn-outline" onclick="mudarStatusProf('${p._id}','ativo')">Ativar</button>
-        <button class="btn-sm btn-danger" onclick="mudarStatusProf('${p._id}','suspenso')">Suspender</button>
+        <button class="btn-sm btn-outline" onclick="mudarStatusProf('${p.id}','ativo')">Ativar</button>
+        <button class="btn-sm btn-danger" onclick="mudarStatusProf('${p.id}','suspenso')">Suspender</button>
       </div></td>
     </tr>
   `).join('');
@@ -341,7 +335,7 @@ async function carregarCli(){
 
 function renderCli(lista){
   const tbody = document.getElementById('lista-cli');
-  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente cadastrado ainda.</td></tr>`; return; }
+  if (!lista.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty"><div class="ico">👥</div>Nenhum cliente cadastrado.</td></tr>`; return; }
   tbody.innerHTML = lista.map(c => `
     <tr>
       <td><div class="usuario-cell"><div class="avatar">${ini(c.nome)}</div><div><div class="nome">${c.nome}</div><div class="email">${c.email}</div></div></div></td>
@@ -349,8 +343,8 @@ function renderCli(lista){
       <td>${c.tipo==='empresa'?'🏢 Empresa':'👤 Pessoa Física'}</td>
       <td><span class="badge badge-${c.status}">${c.status}</span></td>
       <td><div class="acoes">
-        <button class="btn-sm btn-outline" onclick="mudarStatusCli('${c._id}','ativo')">Ativar</button>
-        <button class="btn-sm btn-danger" onclick="mudarStatusCli('${c._id}','bloqueado')">Bloquear</button>
+        <button class="btn-sm btn-outline" onclick="mudarStatusCli('${c.id}','ativo')">Ativar</button>
+        <button class="btn-sm btn-danger" onclick="mudarStatusCli('${c.id}','bloqueado')">Bloquear</button>
       </div></td>
     </tr>
   `).join('');
