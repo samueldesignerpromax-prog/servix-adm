@@ -242,15 +242,42 @@ function pegarToken(){return sessionStorage.getItem('servix_token')}
 function pegarUsuario(){try{const r=sessionStorage.getItem('servix_usuario');return r?JSON.parse(r):null}catch{return null}}
 function logout(){sessionStorage.removeItem('servix_token');sessionStorage.removeItem('servix_usuario');sessionStorage.removeItem('servix_tipo')}
 
-async function api(endpoint, metodo='GET', dados=null){
-  const op = {method: metodo, headers: {'Content-Type':'application/json'}, cache: 'no-store'};
+// ============ API COM RETRY ============
+async function api(endpoint, metodo = 'GET', dados = null, tentativas = 3) {
+  const op = {
+    method: metodo,
+    headers: { 'Content-Type': 'application/json' },
+    cache: 'no-store',
+  };
   const t = pegarToken();
   if (t) op.headers['Authorization'] = `Bearer ${t}`;
   if (dados) op.body = JSON.stringify(dados);
-  const res = await fetch(`${API_URL}${endpoint}`, op);
-  const json = await res.json().catch(()=>({}));
-  if (!res.ok) throw new Error(json.mensagem || `Erro ${res.status}`);
-  return json;
+
+  for (let i = 0; i < tentativas; i++) {
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 60000);
+      op.signal = controller.signal;
+
+      const res = await fetch(`${API_URL}${endpoint}`, op);
+      clearTimeout(tid);
+
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const e = new Error(json.mensagem || `Erro ${res.status}`);
+        e.dados = json;
+        throw e;
+      }
+      return json;
+    } catch (err) {
+      if (i < tentativas - 1 && (err.name === 'AbortError' || err.message.includes('fetch'))) {
+        console.log(`Tentativa ${i + 1} falhou, tentando novamente em 3s...`);
+        await new Promise((r) => setTimeout(r, 3000));
+        continue;
+      }
+      throw err;
+    }
+  }
 }
 
 function mostrar(el, tipo, msg){el.className=`alerta alerta-${tipo}`;el.textContent=msg;el.style.display='flex'}
@@ -309,6 +336,7 @@ async function fazerLogin(e){
   if (!email || !senha) return mostrar(document.getElementById('alerta-login'),'erro','Preencha tudo');
   const btn = document.getElementById('btn-login');
   btn.classList.add('loading'); btn.disabled = true;
+  mostrar(document.getElementById('alerta-login'),'info','⏳ Conectando...');
   try {
     const r = await api(E.login, 'POST', { email, senha });
     sessionStorage.setItem('servix_token', r.dados.token);
@@ -334,7 +362,7 @@ async function entrar(){
 
   await atualizarTudo();
   if (intervalo) clearInterval(intervalo);
-  intervalo = setInterval(atualizarTudo, 8000);
+  intervalo = setInterval(atualizarTudo, 30000);
 }
 
 async function dash(){
